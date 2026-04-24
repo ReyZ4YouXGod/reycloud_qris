@@ -1,0 +1,19 @@
+{
+  "name": "qris-pakasir-vercel",
+  "version": "1.0.0",
+  "description": "QRIS Pakasir integration with webhook instant paid",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel dev",
+    "build": "echo \"No build step required\""
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "mongoose": "^8.0.0",
+    "qrcode": "^1.5.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
