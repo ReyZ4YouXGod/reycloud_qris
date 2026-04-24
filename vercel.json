@@ -1,28 +1,18 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "pages/api/**/*.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "pages/**/*.html",
-      "use": "@vercel/static"
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs18.x"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/pages/api/$1.js"
+      "dest": "/api/$1.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/pages/index.html"
+      "dest": "/index.html"
     }
-  ],
-  "functions": {
-    "pages/api/*.js": {
-      "maxDuration": 10
-    }
-  }
+  ]
 }
