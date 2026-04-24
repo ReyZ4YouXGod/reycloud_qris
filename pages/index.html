@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>QRIS Checkout</title>
+
+<style>
+body{
+  font-family:Arial;
+  background:#0f172a;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.box{
+  width:350px;
+  background:#1e293b;
+  padding:20px;
+  border-radius:20px;
+  text-align:center;
+}
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+}
+button{
+  background:#38bdf8;
+  border:none;
+  cursor:pointer;
+}
+img{
+  margin-top:15px;
+  width:250px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>QRIS PAYMENT</h2>
+
+  <input id="amount" type="number" placeholder="Nominal">
+
+  <button onclick="pay()">Buat QRIS</button>
+
+  <div id="qr"></div>
+</div>
+
+<script>
+async function pay(){
+  const amount = document.getElementById("amount").value;
+  const order_id = "INV-" + Date.now();
+
+  const res = await fetch("/api/create",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ amount, order_id })
+  });
+
+  const data = await res.json();
+
+  const qrImg = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + data.qr_string;
+
+  document.getElementById("qr").innerHTML = `
+    <p>Scan QR:</p>
+    <img src="${qrImg}">
+  `;
+
+  setInterval(async ()=>{
+    const r = await fetch(`/api/status?order_id=${order_id}&amount=${amount}`);
+    const d = await r.json();
+
+    if(d.status === "completed"){
+      alert("PEMBAYARAN BERHASIL");
+    }
+  },5000);
+}
+</script>
+
+</body>
+</html>
