@@ -29,3 +29,13 @@ Sistem payment QRIS menggunakan **Pakasir API**, dengan fitur:
 ---
 
 ## 📁 Struktur Project
+pages/ ├── api/ │    ├── create.js │    ├── status.js │    └── webhook.js ├── index.html
+lib/ └── mongo.js
+models/ └── Order.js
+
+---
+
+## ⚙️ Instalasi
+
+```bash
+npm install
